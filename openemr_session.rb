@@ -4,34 +4,35 @@ def populate_fields(target,data)
   data.each{|key,value|target.text_field(:name=>key).set value}
 end
 def create_patient(brw,target,data,sex)
+  brw.execute_script("window.confirm = function(){return true}")
   populate_fields(target,data)
   target.select_list(:id=>"form_sex").select sex
-#  brw.confirm(true) do
-#    target.button(:id=>"create").click
-#    brw.window(:url,/new_search_popup.php/).use
+  target.button(:id=>"create").click
+  
 
-
-
-    sleep 2
-#    brw.button.click
 end
 class OpenemrSession
   @brw
   def initialize(b)
     @brw = b
+    ObjectSpace.define_finalizer(self, proc{@brw.close})
   end
   def main_window()
-    @brw.frame(:name,"RTop")
+    @brw.frame(:name,"RTop").wait_until_present
+    ret=@brw.frame(:name,"RTop")
+    return ret
   end
   def nav()
     @brw.frame(:name,"left_nav").wait_until_present
-    @brw.frame(:name,"left_nav")
+    nav=@brw.frame(:name,"left_nav")
+    return nav
   end
   def goto_nav(id)
+      
       nav().link(:id=>id).click
   end
   def goto_search()
-    gotoNav("new0")
+    goto_nav("new0")
   end
   def select_pat(name)
     goto_search()
