@@ -15,3 +15,4 @@ $patientInfo={"form_lname"=>$lname,
               "form_fname"=>$fname,
               "form_DOB"=>$dob
 }
+$os.goto_nav "new0"

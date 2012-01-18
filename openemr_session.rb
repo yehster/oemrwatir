@@ -6,13 +6,14 @@ end
 def create_patient(brw,target,data,sex)
   populate_fields(target,data)
   target.select_list(:id=>"form_sex").select sex
-  brw.confirm(true) do
-    target.button(:id=>"create").click
-  end
+#  brw.confirm(true) do
+#    target.button(:id=>"create").click
+#    brw.window(:url,/new_search_popup.php/).use
 
-    brw.window(:url,/new_search_popup.php/).use
+
+
     sleep 2
-    brw.button.click
+#    brw.button.click
 end
 class OpenemrSession
   @brw
