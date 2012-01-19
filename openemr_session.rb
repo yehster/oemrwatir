@@ -7,7 +7,7 @@ def create_patient(brw,target,data,sex)
   brw.execute_script("window.confirm = function(){return true}")
   populate_fields(target,data)
   target.select_list(:id=>"form_sex").select sex
-  target.button(:id=>"create").click
+  target.button(:id=>"create").click_no_wait
   
 
 end
