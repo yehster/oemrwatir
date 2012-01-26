@@ -7,9 +7,14 @@ def create_patient(brw,target,data,sex)
   brw.execute_script("window.confirm = function(){return true}")
   populate_fields(target,data)
   target.select_list(:id=>"form_sex").select sex
-  target.button(:id=>"create").click_no_wait
+  target.button(:id=>"create").click
   
-
+  brw.window(:url=>/new_search_popup.php/).use
+  brw.button.click
+  
+  sleep 3
+  brw.windows[0].use
+  
 end
 class OpenemrSession
   @brw
@@ -25,6 +30,7 @@ class OpenemrSession
   def nav()
     @brw.frame(:name,"left_nav").wait_until_present
     nav=@brw.frame(:name,"left_nav")
+    nav.use
     return nav
   end
   def goto_nav(id)
