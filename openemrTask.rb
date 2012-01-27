@@ -7,3 +7,11 @@ frmLogin.text_field(:name=> "clearPass").set pass
 frmLogin.button(:value=> "Login").click
 
 end
+
+def populate_calendar(os)
+  for i in 1..10
+    find_or_create_numeric_patient(os,i,"Male")
+    sleep 2
+    verify_or_create_appointment(os,i)
+  end
+end

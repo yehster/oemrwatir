@@ -54,7 +54,23 @@ def create_patient(os,data,sex)
   
   sleep 3
   os.brw.windows[0].use
-  
+end
+
+def verify_or_create_appointment(os,slot_num)
+  os.goto_calendar
+  times=os.cal_frame.td(:id=>"times").table
+  div_day=os.cal_frame.div(:class=>"calendar_day")
+  times[slot_num].text
+  if div_day.span(:class=>"appointment",:text=>/#{times[slot_num].text}/).exists?
+    return false
+  else
+    times[slot_num].click
+    os.brw.window(:url=>/add_edit_event.php/).use
+    os.brw.button(:id=>"form_save").click
+    sleep 3
+    os.brw.windows[0].use
+    return true
+  end
 end
 class OpenemrSession
   @brw
@@ -85,17 +101,19 @@ class OpenemrSession
   def goto_calendar()
     goto_nav("cal0")
   end
-  
+  def cal_frame
+    main_window.frames[0]
+  end
   def goto_next_day
-    main_window.frames[0].img(:id=>"nextday").click
+    cal_frames.img(:id=>"nextday").click
   end
   
   def goto_prev_day
-    main_window.frames[0].img(:id=>"prevday").click
+    cal_frames.img(:id=>"prevday").click
   end
   
   def goto_today
-    main_window.frames[0].link(:name=>"bnsubmit").click
+   cal_frames.link(:name=>"bnsubmit").click
   end
   
   def select_pat(name)
