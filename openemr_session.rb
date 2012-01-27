@@ -35,6 +35,10 @@ def find_or_create_patient(os,data,sex)
 
 end
 
+def find_or_create_numeric_patient(os,num,sex)
+  pat=PatientData.new(num,sex)
+  find_or_create_patient(os,pat.fields,pat.sex)
+end
 def fill_patient_form(os,data,sex)
   os.goto_search
   populate_fields(os.main_window(),data)
