@@ -3,21 +3,41 @@
 def populate_fields(target,data)
   data.each{|key,value|target.text_field(:name=>key).set value}
 end
-def create_patient(brw,target,data,sex)
-  brw.execute_script("window.confirm = function(){return true}")
-  populate_fields(target,data)
-  target.select_list(:id=>"form_sex").select sex
-  target.button(:id=>"create").click
-  
-  brw.window(:url=>/new_search_popup.php/).use
-  brw.button.click
+
+def find_or_create_patient(os,data,sex)
+  fill_patient_form(os,data,sex)
+  if(os.brw.div(:id=>"searchResults").table[1].exists?)
+    os.brw.div(:id=>"searchResults").table[1].click
+  else
+  os.brw.button.click   
+  end
+  sleep 3
+  os.brw.windows[0].use
+
+end
+
+def fill_patient_form(os,data,sex)
+  os.goto_nav "new0"
+  populate_fields(os.main_window(),data)
+  os.main_window().select_list(:id=>"form_sex").select sex
+  os.main_window().button(:id=>"create").click
+    os.brw.window(:url=>/new_search_popup.php/).use
+  end
+
+def create_patient(os,data,sex)
+
+  fill_patient_form(os,data,sex)
+  os.brw.button.click
   
   sleep 3
-  brw.windows[0].use
+  os.brw.windows[0].use
   
 end
 class OpenemrSession
   @brw
+  def brw
+    return @brw
+  end
   def initialize(b)
     @brw = b
     ObjectSpace.define_finalizer(self, proc{@brw.close})
@@ -30,7 +50,6 @@ class OpenemrSession
   def nav()
     @brw.frame(:name,"left_nav").wait_until_present
     nav=@brw.frame(:name,"left_nav")
-    nav.use
     return nav
   end
   def goto_nav(id)

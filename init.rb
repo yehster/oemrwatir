@@ -11,9 +11,9 @@ begin
   #$os.select_pat "Doe"
 rescue
 end
-$lname="Lastname2"
-$fname="Firstname2"
-$dob="01/01/1982"
+$lname="Lastname9"
+$fname="Firstname9"
+$dob="01/02/1982"
 $patientInfo={"form_lname"=>$lname,
               "form_fname"=>$fname,
               "form_DOB"=>$dob
