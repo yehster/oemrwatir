@@ -62,6 +62,19 @@ class OpenemrSession
   def goto_calendar()
     goto_nav("cal0")
   end
+  
+  def goto_next_day
+    main_window.frames[0].img(:id=>"nextday").click
+  end
+  
+  def goto_prev_day
+    main_window.frames[0].img(:id=>"prevday").click
+  end
+  
+  def goto_today
+    main_window.frames[0].link(:name=>"bnsubmit").click
+  end
+  
   def select_pat(name)
     goto_search()
     sleep 0.5 until begin
