@@ -17,7 +17,7 @@ def find_or_create_patient(os,data,sex)
 end
 
 def fill_patient_form(os,data,sex)
-  os.goto_nav "new0"
+  os.goto_search
   populate_fields(os.main_window(),data)
   os.main_window().select_list(:id=>"form_sex").select sex
   os.main_window().button(:id=>"create").click
@@ -58,6 +58,9 @@ class OpenemrSession
   end
   def goto_search()
     goto_nav("new0")
+  end
+  def goto_calendar()
+    goto_nav("cal0")
   end
   def select_pat(name)
     goto_search()
