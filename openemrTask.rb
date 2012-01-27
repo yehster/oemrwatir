@@ -8,8 +8,8 @@ frmLogin.button(:value=> "Login").click
 
 end
 
-def populate_calendar(os)
-  for i in 1..10
+def populate_calendar(os,b,e)
+  for i in b..e
     find_or_create_numeric_patient(os,i,"Male")
     sleep 2
     verify_or_create_appointment(os,i)
