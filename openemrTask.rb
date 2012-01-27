@@ -13,5 +13,6 @@ def populate_calendar(os,b,e)
     find_or_create_numeric_patient(os,i,"Male")
     sleep 2
     verify_or_create_appointment(os,i)
+    sleep 2
   end
 end

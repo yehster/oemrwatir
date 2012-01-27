@@ -61,7 +61,7 @@ def verify_or_create_appointment(os,slot_num)
   times=os.cal_frame.td(:id=>"times").table
   div_day=os.cal_frame.div(:class=>"calendar_day")
   times[slot_num].text
-  if div_day.span(:class=>"appointment",:text=>/#{times[slot_num].text}/).exists?
+  if div_day.span(:class=>"appointment",:text=>/\A#{times[slot_num].text}/).exists?
     return false
   else
     times[slot_num].click
@@ -97,6 +97,7 @@ class OpenemrSession
   end
   def goto_search()
     goto_nav("new0")
+    sleep 2
   end
   def goto_calendar()
     goto_nav("cal0")

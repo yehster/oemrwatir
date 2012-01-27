@@ -4,7 +4,7 @@ require "./openemr_session.rb"
 require "./patient_data.rb"
 require "watir-webdriver/extensions/alerts"
 $b=firebugBrowser()
-oemrLogin($b,$openemr,"admin","pass")
+oemrLogin($b,$openemr,"saldana","pass")
 $os=OpenemrSession.new $b
 
 begin
