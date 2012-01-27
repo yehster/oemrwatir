@@ -6,8 +6,27 @@ end
 
 def find_or_create_patient(os,data,sex)
   fill_patient_form(os,data,sex)
+  row_found = false
+  row_to_click = false
   if(os.brw.div(:id=>"searchResults").table[1].exists?)
-    os.brw.div(:id=>"searchResults").table[1].click
+    os.brw.div(:id=>"searchResults").table.rows.each do |row|
+      begin
+        if(row.cells[1].text=~/#{data["form_lname"]}, #{data["form_fname"]}/)
+          if(row.cells[3].text=~/#{data["form_DOB"]}/)
+            if(row.cells[4].text=~/#{sex}/)
+              row_found=true
+              row_to_click=row
+            end
+          end
+        end
+      rescue=>e
+        
+      end
+    end
+  end
+
+  if(row_found)
+    row_to_click.click
   else
   os.brw.button.click   
   end

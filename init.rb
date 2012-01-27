@@ -13,7 +13,7 @@ rescue
 end
 $lname="Lastname9"
 $fname="Firstname9"
-$dob="01/02/1982"
+$dob="1982-01-02"
 $patientInfo={"form_lname"=>$lname,
               "form_fname"=>$fname,
               "form_DOB"=>$dob
